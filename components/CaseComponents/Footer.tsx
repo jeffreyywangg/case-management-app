@@ -10,7 +10,7 @@ import ProgressBar from "react-bootstrap/ProgressBar";
 import { useQuery } from "urql";
 import { queryCaseStatus } from "./CaseManagementContainer";
 
-async function getCategories(data) {
+async function getCategories(data: any) {
   if (data == null)
     return null;
 

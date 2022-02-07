@@ -73,8 +73,9 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
   const mdParser = new MarkdownIt(/* Markdown-it options */);
 
   // Finish!
-  function handleEditorChange({ html, text }) {
+  function handleEditorChange({text, html}: any) {
     setDescription(text);
+    console.log(description);
   }
 
   return (
@@ -133,7 +134,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
               */}
 
               {
-                data.category.filter(x => x != null).map((category: ManagementCategory) => (
+                data.category.filter((x: any) => x != null).map((category: ManagementCategory) => (
                   <MenuItem key={category.id} value={category.id}>
                     {category.name}
                   </MenuItem>
@@ -145,7 +146,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
         ) : fetching ? (
           "Loading Categories or none available."
         ) : null}
-        <MdEditor style={{ height: '400px', marginTop: '1rem'}} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} placeholder={'Enter description here'} />
+        <MdEditor style={{ height: '350px', marginTop: '1rem'}} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} placeholder={'Enter description here'} />
         
         {/* <TextField
           id="standard-full-width"

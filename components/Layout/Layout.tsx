@@ -3,7 +3,7 @@ import Head from "next/head";
 
 type LayoutProps = {
   pageTitle: string;
-  children: JSX.Element;
+  children: JSX.Element|JSX.Element[];
 };
 
 console.log("Layotu props");
@@ -22,6 +22,7 @@ const Layout = (props: LayoutProps) => {
         />
       </Head>
       <div>{props.children}</div>
+      <div></div>
     </div>
   );
 };

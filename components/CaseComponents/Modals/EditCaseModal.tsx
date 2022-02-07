@@ -72,7 +72,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
   const mdParser = new MarkdownIt();
 
   // Finish!
-  function handleEditorChange({ html, text }) {
+  function handleEditorChange({ html, text }: any) {
     setDescription(text);
   }
 
@@ -97,7 +97,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
               >
 
               {
-                caseData.data.cases.filter(x => x != null).map((caseE: ManagementCase) => (
+                caseData.data.cases.filter((x: any) => x != null).map((caseE: ManagementCase) => (
                   <MenuItem key={caseE.id} value={caseE.id}>
                     {caseE.name}
                   </MenuItem>
@@ -122,7 +122,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
                 }}
               >
                 {
-                  data.category.filter(x => x != null).map((category: ManagementCategory) => (
+                  data.category.filter((x: any) => x != null).map((category: ManagementCategory) => (
                     <MenuItem key={category.id} value={category.id}>
                       {category.name}
                     </MenuItem>

@@ -67,12 +67,10 @@ const CaseManagementContainer: React.FC = (props) => {
 
       {/* Feature 1 part 2 */}
 
-      <Grid container spacing={3} xs={4}>
+      <Grid container spacing={3}>
         {
           data ? data.category.map((category: ManagementCategory) => {
-            return (<Grid key={category.id}>
-              <CaseCategory category_id={category.id}/>
-              </Grid>);
+            return <Grid item xs={4}><CaseCategory category_id={category.id} /> </Grid>;
           }) : "Loading Cases..."}
       </Grid>
 

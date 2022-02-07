@@ -1,7 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
-import { useQuery } from "urql";
+import CloseIcon from "@material-ui/icons/Close";
+import { useQuery, useMutation  } from "urql";
 import CaseCard, { CaseData } from "./CaseCard";
+import style from '../../styles/iconStyle';
 
 type CaseCategoryProps = {
   category_id: number;
@@ -63,8 +65,7 @@ const CaseCategory = (props: CaseCategoryProps) => {
           {category
             ? category.cases.map((c: CaseData, index: number) => {
                 return <CaseCard key={index} data={c} />;
-              })
-            : "Something went wrong"}
+              }) : "Something went wrong"}
         </Col>
       </Row>
     </Container>

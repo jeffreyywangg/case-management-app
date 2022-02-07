@@ -16,6 +16,10 @@ import {
   ManagementCategory,
   ManagementContainerQuery,
 } from "../CaseManagementContainer";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,22 +38,24 @@ const useStyles = makeStyles((theme: Theme) =>
 type AddCaseModalProps = {
   open: boolean;
   onClose: () => void;
-};
+}; 
 
 /* 
   FEATURE 2 TODO:
   Write a mutation that will insert (add) a new case given the
   description, name, status, and category_id.
-  
-  Make sure to replace the string that is currently
-  in this variable 
 */
 const InsertCaseMutation = `
-query MyQuery {
-  __typename # Placeholder value
-}
+  mutation InsertCaseMutation($description: String = "", $name: String = "", $status: String = "", $category_id: Int = 0) {
+    insert_cases_one(object: {description: $description, , name: $name, status: $status, category_id: $category_id}) {
+      description
+      id
+      category_id
+      name
+      status
+    }
+  }  
 `;
-// END TODO
 
 const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
   const classes = useStyles();
@@ -60,10 +66,19 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
   const [{ data, fetching, error }, executeQuery] = useQuery({
     query: ManagementContainerQuery,
   });
-
   const [result, executeMutation] = useMutation(InsertCaseMutation);
+  const [markdown, setMarkdown] = useState<string>("");
+
+  // Initialize a markdown parser
+  const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+  // Finish!
+  function handleEditorChange({ html, text }) {
+    setDescription(text);
+  }
 
   return (
+    
     <StyledModal open={props.open} onClose={props.onClose}>
       <Typography variant="h4" align="center">
         Add New Case
@@ -78,20 +93,6 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
           value={name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setName(event.target.value);
-          }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          id="standard-full-width"
-          label="Description"
-          placeholder="Example Case Description"
-          fullWidth
-          margin="normal"
-          value={description}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setDescription(event.target.value);
           }}
           InputLabelProps={{
             shrink: true,
@@ -115,26 +116,52 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
         {data ? (
           <FormControl fullWidth>
             <InputLabel id="category-select-label">Category</InputLabel>
-            <Select
-              labelId="category-select-label"
-              fullWidth
-              value={category}
-              onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                setCategory(event.target.value as number);
-              }}
-            >
+              <Select
+                labelId="category-select-label"
+                fullWidth
+                value={category}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+                  setCategory(event.target.value as number);
+                }}
+              >
+              
               {/*
                 FEATURE 2 TODO:
                 Use the data from the result of the query ManagementContainerQuery
                 to render a MenuItem with category id as the value, and the 
                 category name as the text.
               */}
-              {/* END TODO */}
+
+              {
+                data.category.filter(x => x != null).map((category: ManagementCategory) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                )) 
+              }
+
             </Select>
           </FormControl>
         ) : fetching ? (
-          "Loading Categories"
+          "Loading Categories or none available."
         ) : null}
+        <MdEditor style={{ height: '400px', marginTop: '1rem'}} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} placeholder={'Enter description here'} />
+        
+        {/* <TextField
+          id="standard-full-width"
+          label="Description"
+          placeholder="Example Case Description"
+          fullWidth
+          margin="normal"
+          value={description}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setDescription(event.target.value);
+          }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        /> */}
+
       </Box>
       <Box mt="10px" display="flex" justifyContent="center">
         <Button
@@ -147,6 +174,7 @@ const AddCaseModal: React.FC<AddCaseModalProps> = (props) => {
               category_id: category,
             });
             props.onClose();
+            window.location.reload();
           }}
         >
           Submit

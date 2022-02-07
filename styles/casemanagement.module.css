@@ -1,5 +1,5 @@
 .footer {
-  margin-top: 1rem;
+  margin-top: 10rem;
   padding: 1rem;
   background-color: #4ce4a9;
   position: fixed;
@@ -21,9 +21,11 @@
 }
 
 .title {
-  text-align: center;
+  text-align: left;
   margin-top: 2em;
+  margin-bottom: 4em;
 }
+
 .description {
   text-align: center;
 }

@@ -6,7 +6,9 @@ type LayoutProps = {
   children: JSX.Element;
 };
 
+console.log("Layotu props");
 const Layout = (props: LayoutProps) => {
+  console.log(props);
   return (
     <div>
       <Head>

@@ -22,7 +22,7 @@ const StyledModal: React.FC<StyledModalProps> = (props) => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           position: "absolute",
-          width: 400,
+          width: 800,
           paddingTop: "0.75em",
           paddingBottom: "0.75em",
           backgroundColor: "#FFFEF2",

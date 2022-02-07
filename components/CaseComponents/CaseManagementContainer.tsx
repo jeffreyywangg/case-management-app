@@ -1,5 +1,5 @@
 import React from "react";
-import Grid, { GridSpacing, Item } from "@material-ui/core/Grid";
+import Grid, { GridSpacing } from "@material-ui/core/Grid";
 import "../../styles/casemanagement.module.css";
 import CaseCategory from "./CaseCategory";
 import AddCaseModal from "./Modals/AddCaseModal";

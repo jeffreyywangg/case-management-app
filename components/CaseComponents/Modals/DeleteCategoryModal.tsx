@@ -74,7 +74,7 @@ const DeleteCategoryModal:  React.FC<AddCaseModalProps> = (props) => {
                         }}
                     >
                         {
-                            data.category.filter(x => x != null).map((category: ManagementCategory) => (
+                            data.category.filter((x: any) => x != null).map((category: ManagementCategory) => (
                             <MenuItem key={category.id} value={category.id}>
                                 {category.name}
                             </MenuItem>
